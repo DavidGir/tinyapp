@@ -30,13 +30,22 @@ app.get("/set", (req, res) => {
   res.send(`a = ${a}`);
 });
  
-app.get("/fetch", (req, res) => {
-  res.send(`a = ${a}`);
-});
+// app.get("/fetch", (req, res) => {
+//   res.send(`a = ${a}`);
+// });
 
 app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
+});
+
+//Second route; Route parameter:
+app.get("/urls/:id", (req, res) => {
+  const shortURL = req.params.id;
+  const longURL = urlDatabase[shortURL];
+  const templateVars = { id: shortURL, longURL: longURL };
+  console.log("templateVars:", templateVars);
+  res.render("urls_show", templateVars);
 });
 
 // Event handlers:
