@@ -14,7 +14,10 @@ app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
-
+app.get("/urls.json", (req, res) => {
+  // outputs the urlDatabase object on the web client:
+  res.json(urlDatabase);
+});
 
 // Event handlers:
 
