@@ -14,6 +14,26 @@ const urlDatabase = {
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
 
+//generateRandomString function:
+const generateRandomString = function() {
+  //Initialize variable to contain generated string result:
+  let result = "";
+  // Contain alphabetical letters and numerics:
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  // Select random character from the "characters" string:
+  const randomCharacter = characters.charAt(Math.floor(Math.random() * charactersLength));
+  //Loop six times to return six random alphanumeric characters:
+  for (let i = 0; i < 6; i++) {
+    // Add six random alphanumeric characters to the result:
+    result += randomCharacter;
+  }
+  // Return result:
+  return result;
+};
+
+
+
 // Routing for paths:
 
 // POST route:
