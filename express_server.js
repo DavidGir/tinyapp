@@ -48,8 +48,8 @@ app.post("/urls", (req, res) => {
   // Redirect to the new URL's info page:
   res.redirect(`/urls/${shortURL}`);
 });
-
-// GET routes:
+// ----------------------------------------------------------------------------
+// GET routes for URL manipulation:
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -81,17 +81,36 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
 
-//Second route; Route parameter:
+//Second route; Route parameter. SHows the details of a specific shortURL:
 app.get("/urls/:id", (req, res) => {
+  // Contain the shortURL from the route parameter:
   const shortURL = req.params.id;
+  // Look up the longURL using the shortURL:
   const longURL = urlDatabase[shortURL];
   const templateVars = { id: shortURL, longURL: longURL };
   console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
 });
+//-----------------------------------------------------------------------------
 
+// GET route for URL redirection:
 
+app.get("/u/:id", (req, res) => {
+  // Contain in variable the shortURL from the route parameter:
+  const shortURL = req.params.id;
+  // Look up the longURL using the shortURL:
+  const longURL = urlDatabase[shortURL];
+  // Check if the longURL exists:
+  if (longURL) {
+    // Redirect to the longURL:
+    res.redirect(longURL);
+  } else {
+    // Handle the case where the shortURL does not exist:
+    res.status(404).send("Short URL not found");
+  }
+});
 
+//-----------------------------------------------------------------------------
 // Event handlers:
 
 app.listen(PORT, () => {
