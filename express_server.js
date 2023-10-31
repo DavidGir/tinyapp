@@ -38,8 +38,15 @@ const generateRandomString = function() {
 
 // POST route:
 app.post("/urls", (req, res) => {
-  console.log(req.body); // Log the POST request body to the console
-  res.send("Ok"); // Respond with 'Ok' (we will replace this)
+  // To generate a random string for the shortURL:
+  const shortURL = generateRandomString();
+  // Getting the long URL from the form submission:
+  const longURL = req.body.longURL;
+  // Save the short and long URL to the database:
+  urlDatabase[shortURL] = longURL;
+  // console.log(req.body);
+  // Redirect to the new URL's info page:
+  res.redirect(`/urls/${shortURL}`);
 });
 
 // GET routes:
