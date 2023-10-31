@@ -10,6 +10,10 @@ const urlDatabase = {
 };
 
 
+// Middleware:
+//Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
+app.use(express.urlencoded({ extended: true }));
+
 // Routing for paths:
 
 app.get("/", (req, res) => {
