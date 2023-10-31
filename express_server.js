@@ -38,6 +38,10 @@ app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
 });
+// Render urls_new.ejs template in the browser:
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
+});
 
 //Second route; Route parameter:
 app.get("/urls/:id", (req, res) => {
@@ -47,6 +51,8 @@ app.get("/urls/:id", (req, res) => {
   console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
 });
+
+
 
 // Event handlers:
 
