@@ -16,7 +16,7 @@ const urlDatabase = {
 // MIDDLEWARE:
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
-// Use of cookieParser in the app:
+// Use of cookieParser in the app to parse incoming cookies off the req object:
 app.use(cookieParser());
 
 // UTILITY FUNCTIONS:
@@ -57,9 +57,10 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
+// Sets a cookie named username with the value submitted in the request body via the login form. Redirects to url page.
 app.post("/login", (req, res) => {
-  const username = res.cookie;
-  username = req.body;
+  const username = req.body.username;
+  res.cookie("username", username);
   res.redirect("/urls");
 });
 
