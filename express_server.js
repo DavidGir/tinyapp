@@ -1,20 +1,22 @@
+// Import Express library and initialize an application instance:
 const express = require("express");
 const app = express();
+// Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
 app.set("view engine", "ejs");
-
+// In-memory database object:
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
 
-
-// Middleware:
+// MIDDLEWARE:
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
 
-//generateRandomString function:
+// UTILITY FUNCTIONS:
+//generateRandomString function; generates random string to be used as a short URL identifier:
 const generateRandomString = function() {
   //Initialize variable to contain generated string result:
   let result = "";
@@ -32,9 +34,13 @@ const generateRandomString = function() {
   return result;
 };
 
-// Routing for paths:
+// --------------------------------------------------------------------------
 
-// POST route:
+// ROUTE METHODS:
+
+// POST methods routes:
+
+// Handles form submissions to create new short URLs:
 app.post("/urls", (req, res) => {
   // To generate a random string for the shortURL:
   const shortURL = generateRandomString();
@@ -47,6 +53,7 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
+// Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
 app.post("/urls/:id/delete", (req, res) => {
   // Extract the :id parameter from the URL:
   const id = req.params.id;
@@ -56,10 +63,10 @@ app.post("/urls/:id/delete", (req, res) => {
   } else {
     return res.status(404).send("URL not found");
   }
-  
   // Redirect back to the urls_index page:
   res.redirect("/urls");
 });
+
 
 app.post("/urls/:id", (req, res) => {
   // Extract the :id parameter from the URL:
@@ -76,8 +83,11 @@ app.post("/urls/:id", (req, res) => {
   // Redirect to urls page:
   res.redirect("/urls");
 });
+
 // ----------------------------------------------------------------------------
-// GET routes for URL manipulation:
+
+// GET method routes for URL manipulation:
+
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -95,10 +105,6 @@ app.get("/set", (req, res) => {
   const a = 1;
   res.send(`a = ${a}`);
 });
- 
-// app.get("/fetch", (req, res) => {
-//   res.send(`a = ${a}`);
-// });
 
 app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
@@ -121,7 +127,7 @@ app.get("/urls/:id", (req, res) => {
 });
 //-----------------------------------------------------------------------------
 
-// GET route for URL redirection:
+// GET method route for URL redirection:
 
 app.get("/u/:id", (req, res) => {
   // Contain in variable the shortURL from the route parameter:
@@ -139,6 +145,7 @@ app.get("/u/:id", (req, res) => {
 });
 
 //-----------------------------------------------------------------------------
+
 // Event handlers:
 
 app.listen(PORT, () => {
