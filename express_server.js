@@ -62,6 +62,22 @@ app.post("/urls/:id/delete", (req, res) => {
   // Redirect back to the urls_index page:
   res.redirect("/urls");
 });
+
+app.post("/urls/:id", (req, res) => {
+  // Extract the :id parameter from the URL:
+  const id = req.params.id;
+  // Extract the new long URL from the request body:
+  const newLongURL = req.body.newLongURL;
+
+  // Update the long URL associated with the given short URL id:
+  if (urlDatabase[id]) {
+    urlDatabase[id] = newLongURL;
+  } else {
+    return res.status(404).send("URL not found");
+  }
+  // Redirect to urls page:
+  res.redirect("/urls");
+});
 // ----------------------------------------------------------------------------
 // GET routes for URL manipulation:
 app.get("/", (req, res) => {
