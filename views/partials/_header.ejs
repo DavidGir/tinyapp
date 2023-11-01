@@ -18,7 +18,7 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
       <div class="ml-auto">
-        <!-- Username info is displayed conditionally based on whether the user is logged in or not. -->
+        <!-- Username info is displayed conditionally based on whether the user is logged in the logout button will be available else it will be on login. -->
         <% if (username) { %>
           Logged in as: <%= username %>
           <form method="POST" action="/logout" style="display: inline;">
