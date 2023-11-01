@@ -39,6 +39,10 @@
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               </td>
+              <td>
+                <!-- "Edit" column is added to the table. Each row in this column contains a link to the urls_show page for the corresponding URL -->
+              <a href="/urls/<%= id %>" class="btn btn-secondary">Edit</a>
+              </td>
             </tr>
           <% } %>
         </tbody>
