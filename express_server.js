@@ -21,10 +21,10 @@ const generateRandomString = function() {
   // Contain alphabetical letters and numerics:
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
-  // Select random character from the "characters" string:
-  const randomCharacter = characters.charAt(Math.floor(Math.random() * charactersLength));
   //Loop six times to return six random alphanumeric characters:
   for (let i = 0; i < 6; i++) {
+    // Select random character from the "characters" string:
+    const randomCharacter = characters.charAt(Math.floor(Math.random() * charactersLength));
     // Add six random alphanumeric characters to the result:
     result += randomCharacter;
   }
