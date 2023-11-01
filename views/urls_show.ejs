@@ -16,6 +16,8 @@
       <div class="card-header"></div>
       <div class="card-body">
         <h5 class="card-title">TinyURL for: <%= longURL %></h5>
+        <!-- Add form that takes text input element and button element  -->
+        <!-- Will allow user to update the long URL associated with a given short URL. THe form submits a POST request to "/urls/:id/update"  -->
         <form method="POST" action="/urls/<%= id %>/update">
           <div class="form-group">
             <label for="newLongURL">New Long URL:</label>
