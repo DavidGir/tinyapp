@@ -32,8 +32,6 @@ const generateRandomString = function() {
   return result;
 };
 
-
-
 // Routing for paths:
 
 // POST route:
