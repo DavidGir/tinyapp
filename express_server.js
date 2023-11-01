@@ -1,6 +1,10 @@
 // Import Express library and initialize an application instance:
 const express = require("express");
 const app = express();
+// Import cookieParser middleware:
+const cookieParser = require("cookie-parser");
+// Use of cookieParser in the app:
+app.use(cookieParser());
 // Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
@@ -51,6 +55,12 @@ app.post("/urls", (req, res) => {
   // console.log(req.body);
   // Redirect to the new URL's info page:
   res.redirect(`/urls/${shortURL}`);
+});
+
+app.post("/login", (req, res) => {
+  const username = res.cookie;
+  username = req.body;
+  res.redirect("/urls");
 });
 
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
