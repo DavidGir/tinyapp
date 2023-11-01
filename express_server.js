@@ -61,6 +61,13 @@ app.post("/login", (req, res) => {
   res.redirect("/urls");
 });
 
+// Clear the username cookie and redirect the user back to urls page:
+app.post("/logout", (res, req) => {
+  const username = req.body.username;
+  res.clearCookie("username", username);
+  res.redirect("/urls");
+});
+
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
 app.post("/urls/:id/delete", (req, res) => {
   // Extract the :id parameter from the URL:
