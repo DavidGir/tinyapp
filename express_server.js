@@ -62,9 +62,9 @@ app.post("/login", (req, res) => {
 });
 
 // Clear the username cookie and redirect the user back to urls page:
-app.post("/logout", (res, req) => {
-  const username = req.body.username;
-  res.clearCookie("username", username);
+app.post("/logout", (req, res) => {
+  // name is already specified when cookie was set:
+  res.clearCookie("username");
   res.redirect("/urls");
 });
 
