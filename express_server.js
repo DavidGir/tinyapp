@@ -48,6 +48,20 @@ app.post("/urls", (req, res) => {
   // Redirect to the new URL's info page:
   res.redirect(`/urls/${shortURL}`);
 });
+
+app.post("/urls/:id/delete", (req, res) => {
+  // Extract the :id parameter from the URL:
+  const id = req.params.id;
+  // Use delete operator:= to remove URL:
+  if (urlDatabase[id]) {
+    delete urlDatabase[id];
+  } else {
+    return res.status(404).send("URL not found");
+  }
+  
+  // Redirect back to the urls_index page:
+  res.redirect("/urls");
+});
 // ----------------------------------------------------------------------------
 // GET routes for URL manipulation:
 app.get("/", (req, res) => {
