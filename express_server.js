@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 // Import cookieParser middleware:
 const cookieParser = require("cookie-parser");
+// Import morgan middleware:
+const morgan = require("morgan");
 // Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
@@ -18,6 +20,9 @@ const urlDatabase = {
 app.use(express.urlencoded({ extended: true }));
 // Use of cookieParser in the app to parse incoming cookies off the req object:
 app.use(cookieParser());
+// Use the logger middleware:
+app.use(morgan("dev"));
+
 
 // UTILITY FUNCTIONS:
 //generateRandomString function; generates random string to be used as a short URL identifier:
