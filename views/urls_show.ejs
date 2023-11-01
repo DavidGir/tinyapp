@@ -23,11 +23,16 @@
         <!-- Add form that takes text input element and button element  -->
         <!-- Will allow user to update the long URL associated with a given short URL. THe form submits a POST request to "/urls/:id/update"  -->
         <form method="POST" action="/urls/<%= id %>">
-          <div class="form-group">
+          <div class="form-group text-center">
             <label for="newLongURL">New URL:</label>
-            <input type="text" class="form-control" id="newLongURL" name="newLongURL" value="<%= longURL %>">
+            <div class="d-flex justify-content-center"> 
+            <input type="text" class="form-control" id="newLongURL" name="newLongURL" value="<%= longURL %>" placeholder="http://" 
+            style="width: 300px;">
+            </div>
           </div>
+          <div class="text-center">
           <button type="submit" class="btn btn-primary">Update</button>
+          </div>
         </form>
       </div>
       <div class="card-footer text-muted"></div>
