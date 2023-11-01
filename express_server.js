@@ -137,7 +137,11 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
   const longURL = urlDatabase[shortURL];
-  const templateVars = { id: shortURL, longURL: longURL };
+  const templateVars = {
+    id: shortURL,
+    longURL: longURL,
+    username: req.cookies["username"]
+  };
   console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
 });
