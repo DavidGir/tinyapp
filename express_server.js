@@ -128,6 +128,12 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+// Get Route for the registration page:
+app.get("/register", (req, res) => {
+  const templateVars = { username: req.cookies["username"] };
+  res.render("register", templateVars);
+});
+
 // Renders the urls_new.ejs template, which contains a form for creating new short URLs:
 app.get("/urls/new", (req, res) => {
   const templateVars = { username: req.cookies["username"] };
