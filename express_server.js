@@ -27,20 +27,10 @@ app.use(morgan("dev"));
 // UTILITY FUNCTIONS:
 //generateRandomString function; generates random string to be used as a short URL identifier:
 const generateRandomString = function() {
-  //Initialize variable to contain generated string result:
-  let result = "";
-  // Contain alphabetical letters and numerics:
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  //Loop six times to return six random alphanumeric characters:
-  for (let i = 0; i < 6; i++) {
-    // Select random character from the "characters" string:
-    const randomCharacter = characters.charAt(Math.floor(Math.random() * charactersLength));
-    // Add six random alphanumeric characters to the result:
-    result += randomCharacter;
-  }
+  // Initialize variable to generate random six alphanumeric characters:
+  const randomString = Math.random().toString(36).substring(2, 8);
   // Return result:
-  return result;
+  return randomString;
 };
 
 // --------------------------------------------------------------------------
@@ -65,6 +55,7 @@ app.post("/urls", (req, res) => {
 // Sets a cookie named username with the value submitted in the request body via the login form. Redirects to url page.
 app.post("/login", (req, res) => {
   const username = req.body.username;
+  // Set cookie:
   res.cookie("username", username);
   // console.log("req.cookies", req.cookies); // test
   res.redirect("/urls");
@@ -74,7 +65,7 @@ app.post("/login", (req, res) => {
 app.post("/urls/:id/delete", (req, res) => {
   // Extract the :id parameter from the URL:
   const id = req.params.id;
-  // Use delete operator:= to remove URL:
+  // Use delete operator to remove URL:
   if (urlDatabase[id]) {
     delete urlDatabase[id];
   } else {
