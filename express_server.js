@@ -87,38 +87,38 @@ app.post("/urls/:id", (req, res) => {
 
 // GET method routes for URL manipulation:
 
+// When a client navigates to http://localhost:8080/, they'll receive the text "Hello!":
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
+// Outputs the urlDatabase object as JSON when a client navigates to http://localhost:8080/urls.json:
 app.get("/urls.json", (req, res) => {
-  // outputs the urlDatabase object on the web client:
   res.json(urlDatabase);
 });
 
+// Sends a simple HTML response when a client navigates to http://localhost:8080/hello:
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
-app.get("/set", (req, res) => {
-  const a = 1;
-  res.send(`a = ${a}`);
-});
-
+// Renders the urls_index.ejs template, passing in the urlDatabase object as a variable.
+// This will display a list of all short URLs and their corresponding long URLs:
 app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
 });
-// Render urls_new.ejs template in the browser:
+
+// Renders the urls_new.ejs template, which contains a form for creating new short URLs:
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
 
-//Second route; Route parameter. SHows the details of a specific shortURL:
+// Renders the urls_show.ejs template for a specific short URL.
+// The short URL is obtained from the route parameter :id.
+// The corresponding long URL is looked up in the urlDatabase:
 app.get("/urls/:id", (req, res) => {
-  // Contain the shortURL from the route parameter:
   const shortURL = req.params.id;
-  // Look up the longURL using the shortURL:
   const longURL = urlDatabase[shortURL];
   const templateVars = { id: shortURL, longURL: longURL };
   console.log("templateVars:", templateVars);
@@ -145,8 +145,9 @@ app.get("/u/:id", (req, res) => {
 
 //-----------------------------------------------------------------------------
 
-// Event handlers:
+// EVENT HANDLERS:
 
+// Start the Express server to listen on specific port:
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
