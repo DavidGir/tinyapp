@@ -20,13 +20,13 @@
       <div class="ml-auto">
         <!-- Username info is displayed conditionally based on whether the user is logged in or not. -->
         <% if (username) { %>
-          Welcome, <%= username %>
+          Logged in as: <%= username %>
         <% } else { %>
           Not logged in
         <% } %>
         <!-- Login Form -->
         <form method="POST" action="/login" style="display: inline;">
-          <input type="text" id="username" name="username" placeholder="Username">
+          <input type="text" id="username" name="username" placeholder="Username" style="margin-left: 20px;">
           <button type="submit" class="btn btn-success">Login</button>
         </form>
       </div>
