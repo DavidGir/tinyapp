@@ -21,6 +21,9 @@
         <!-- Username info is displayed conditionally based on whether the user is logged in or not. -->
         <% if (username) { %>
           Logged in as: <%= username %>
+          <form method="POST" action="/logout" style="display: inline;">
+            <button type="submit" class="btn btn-danger">Logout</button>
+          </form>
         <% } else { %>
           Not logged in
         <% } %>
