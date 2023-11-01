@@ -67,13 +67,12 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 });
 
-
+// Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
 app.post("/urls/:id", (req, res) => {
   // Extract the :id parameter from the URL:
   const id = req.params.id;
   // Extract the new long URL from the request body:
   const newLongURL = req.body.newLongURL;
-
   // Update the long URL associated with the given short URL id:
   if (urlDatabase[id]) {
     urlDatabase[id] = newLongURL;
