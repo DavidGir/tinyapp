@@ -29,6 +29,7 @@ const users = {
 };
 
 // MIDDLEWARE:
+
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
 // Use of cookieParser in the app to parse incoming cookies off the req object:
@@ -38,6 +39,7 @@ app.use(morgan("dev"));
 
 
 // UTILITY FUNCTIONS:
+
 //generateRandomString function; generates random string to be used as a short URL identifier:
 const generateRandomString = function() {
   // Initialize variable to generate random six alphanumeric characters:
@@ -45,6 +47,22 @@ const generateRandomString = function() {
   // Return result:
   return randomString;
 };
+
+// Helper function to handle registration errors:
+const findUserByEmail = (email) => {
+  // Loop through users object:
+  for (let userID in users) {
+    const user = users[userID];
+    // If user email is in our users data store (exists):
+    if (user.email === email) {
+      // Return user object for match found:
+      return user;
+    }
+  }
+  // Return null if no match exists:
+  return null;
+};
+
 
 // --------------------------------------------------------------------------
 
