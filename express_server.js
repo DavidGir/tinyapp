@@ -221,6 +221,16 @@ app.get("/hello", (req, res) => {
 app.get("/urls", (req, res) => {
   const userID = req.cookies["user_id"];
   const user = users[userID];
+  // Initialize an empty object to store URLs that belong to the logged in user:
+  const userURLs = {};
+  // Loop through each key (shortURL ID) in the urlDatabase:
+  for (const id in urlDatabase) {
+    // CHeck if userID associated with current URL matches logged in user's ID:
+    if (urlDatabase[id].userID === userID) {
+      // If match add URLs to the userURLs object:
+      userURLs[id] = urlDatabase[id];
+    }
+  }
   const templateVars = {
     urls: urlDatabase,
     // Pass the user object:
