@@ -86,12 +86,15 @@ app.post("/urls", (req, res) => {
 // Sets a cookie named user_id with the value submitted in the request body via the login form. Redirects to url page.
 app.post("/login", (req, res) => {
   const email = req.body.email;
-  const password = req.body.email;
+  const password = req.body.password;
   // Using the helper function to get user object:
   const user = findUserByEmail(email);
   // If no user is found, or the passwords don't match, we send 403:
   if (!user) {
     return res.status(403).send("User cannot be found.");
+  }
+  if (user.password !== password) {
+    return res.status(403).send("Password does not match.");
   }
   // Set cookie:
   res.cookie("username", username);
