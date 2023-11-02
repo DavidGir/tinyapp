@@ -242,7 +242,7 @@ app.get("/urls/new", (req, res) => {
   if (!user) {
     res.redirect("/login");
   }
-  
+  // If user is logged in, render the page to create new URLs:
   const templateVars = { user: user };
   res.render("urls_new", templateVars);
 });
