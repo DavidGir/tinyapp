@@ -312,11 +312,11 @@ app.get("/urls/:id", (req, res) => {
 app.get("/u/:id", (req, res) => {
   // Contain in variable the shortURL from the route parameter:
   const shortURL = req.params.id;
-  // Look up the longURL using the shortURL:
-  const longURL = urlDatabase[shortURL];
-  // Check if the longURL exists:
-  if (longURL) {
-    // Redirect to the longURL:
+  // Check if the short URL exists in the urlDatabase:
+  if (urlDatabase[shortURL]) {
+    // Initialize variable to contain the long URL from the urlDatabase:
+    const longURL = urlDatabase[shortURL].longURL;
+    // Redirect client to the long URL:
     res.redirect(longURL);
   } else {
     // Handle the case where the shortURL does not exist; message in HTML:
