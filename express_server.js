@@ -75,9 +75,11 @@ app.post("/urls", (req, res) => {
   // Adding cookie user_id and user:
   const userID = req.cookies["user_id"];
   const user = users[userID];
-  
-  
-  
+  // If the user is not logged in; send a message, 401 unauthorized code:
+  if (!user) {
+    return res.status(401).send("You must be logged in to be able to shorten URLs.");
+  }
+  // If the user is logged in; can proceed with creating new short URL:
   // To generate a random string for the shortURL:
   const shortURL = generateRandomString();
   // Getting the long URL from the form submission:
