@@ -232,7 +232,7 @@ app.get("/urls", (req, res) => {
     }
   }
   const templateVars = {
-    urls: urlDatabase,
+    urls: userURLs,
     // Pass the user object:
     user: user
   };
