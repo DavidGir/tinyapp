@@ -169,16 +169,20 @@ app.post("/register", (req, res) => {
 
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
 app.post("/urls/:id/delete", (req, res) => {
-  // Extract the :id parameter from the URL:
-  const id = req.params.id;
-  // Use delete operator to remove URL:
-  if (urlDatabase[id]) {
-    delete urlDatabase[id];
+  // Initialize variable to contain user_id cookie to identify logged in user:
+  const userID = req.cookies["user_id"];
+  // Extract the :id (shortURL ID) parameter from the URL:
+  const shortURL = req.params.id;
+  // If the short URL exists in the database and belongs to the logged in user:
+  if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
+    // Use delete operator to delete URL from the database:
+    delete urlDatabase[shortURL];
+    // Redirect to urls page:
+    res.redirect("/urls");
   } else {
+    // Else return 404:
     return res.status(404).send("URL not found");
   }
-  // Redirect back to the urls_index page:
-  res.redirect("/urls");
 });
 
 // Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
