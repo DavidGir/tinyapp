@@ -183,14 +183,17 @@ app.post("/urls/:id/delete", (req, res) => {
 
 // Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
 app.post("/urls/:id", (req, res) => {
-  // Extract the :id parameter from the URL:
-  const id = req.params.id;
-  // Extract the new long URL from the request body:
-  const newLongURL = req.body.newLongURL;
-  // Update the long URL associated with the given short URL id:
-  if (urlDatabase[id]) {
-    urlDatabase[id] = newLongURL;
+  // Initialize variable to contain user_id cookie to identify logged in user:
+  const userID = req.cookies["user_id"];
+  // Extract the :id (shortURL ID) parameter from the URL:
+  const shortURL = req.params.id;
+  // If the short URL exists in the database and belongs to the logged in user:
+  if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
+    // Update the long URL associated with that short URL:
+    urlDatabase[shortURL] = req.body.newLongURL;
+    // Update the long URL associated with the given short URL id:
   } else {
+    // If the short URL does not exist or not belong to user send message:
     return res.status(404).send("URL not found");
   }
   // Redirect to urls page:
