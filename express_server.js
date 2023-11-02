@@ -97,7 +97,7 @@ app.post("/login", (req, res) => {
     return res.status(403).send("Password does not match.");
   }
   // Set cookie:
-  res.cookie("username", username);
+  res.cookie("user_id", user.id);
   res.redirect("/urls");
 });
 
