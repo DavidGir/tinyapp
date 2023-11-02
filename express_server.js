@@ -172,7 +172,9 @@ app.get("/register", (req, res) => {
 
 // Renders the urls_new.ejs template, which contains a form for creating new short URLs:
 app.get("/urls/new", (req, res) => {
-  const templateVars = { username: req.cookies["username"] };
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
+  const templateVars = { user: user };
   res.render("urls_new", templateVars);
 });
 
