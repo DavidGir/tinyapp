@@ -20,8 +20,8 @@
       <div class="ml-auto">
         <% if (!user) { %>
           <!-- If user is not logged in, show these links -->
-          <a href="/register">Register</a>
-          <a href="/login">Login</a>
+          <a class="btn btn-outline-light mr-2" href="/login">Login</a>
+          <a class="btn btn-outline-light" href="/register">Register</a> 
         <% } else { %>
           <!-- If user is logged in, show a logout button -->
           <form method="POST" action="/logout" style="display: inline;">
