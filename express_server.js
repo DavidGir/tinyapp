@@ -102,8 +102,8 @@ app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   // Getting the long URL from the form submission:
   const longURL = req.body.longURL;
-  // Save the short and long URL to the database:
-  urlDatabase[shortURL] = longURL;
+  // Store a new object with longURL and userID:
+  urlDatabase[shortURL] = { longURL, userID };
   // console.log(req.body);
   // Redirect to the new URL's info page:
   res.redirect(`/urls/${shortURL}`);
