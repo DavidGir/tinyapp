@@ -154,10 +154,12 @@ app.get("/hello", (req, res) => {
 // Renders the urls_index.ejs template, passing in the urlDatabase object as a variable.
 // This will display a list of all short URLs and their corresponding long URLs:
 app.get("/urls", (req, res) => {
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
   const templateVars = {
     urls: urlDatabase,
-    // Get username from cookie:
-    username: req.cookies["username"]
+    // Pass the user object:
+    user: user
   };
   res.render("urls_index", templateVars);
 });
