@@ -83,7 +83,7 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-// Sets a cookie named user_id with the value submitted in the request body via the login form. Redirects to url page.
+// POST /login route: Authenticates the user and sets a session cookie.
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
