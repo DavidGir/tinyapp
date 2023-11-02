@@ -214,6 +214,11 @@ app.get("/register", (req, res) => {
 // Get route for the login page:
 app.get("/login", (req, res) => {
   const userID = req.cookies["user_id"];
+  // Check if user is already logged in:
+  if (userID && users[userID]) {
+    // Redirect to /urls:
+    res.redirect("/urls");
+  }
   const user = users[userID];
   const templateVars = { user: user };
   res.render("login", templateVars);
