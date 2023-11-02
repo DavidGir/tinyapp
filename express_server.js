@@ -206,9 +206,16 @@ app.get("/urls", (req, res) => {
 // Get Route for the registration page:
 app.get("/register", (req, res) => {
   const userID = req.cookies["user_id"];
-  const user = users[userID];
-  const templateVars = { user: user };
-  res.render("register", templateVars);
+  // Check if user_id cookie corresponds with valid user in users obj (meaning user is in login state):
+  if (userID && users[userID]) {
+    // Redirect to /urls:
+    res.redirect("/urls");
+  } else {
+    // Render the registration page if not already logged in:
+    // Rendering assuming there is no logged in user:
+    const templateVars = { user: null };
+    res.render("register", templateVars);
+  }
 });
 
 // Get route for the login page:
