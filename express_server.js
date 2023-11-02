@@ -83,9 +83,16 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-// Sets a cookie named username with the value submitted in the request body via the login form. Redirects to url page.
+// Sets a cookie named user_id with the value submitted in the request body via the login form. Redirects to url page.
 app.post("/login", (req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
+  const password = req.body.email;
+  // Using the helper function to get user object:
+  const user = findUserByEmail(email);
+  // If no user is found, or the passwords don't match, we send 403:
+  if (!user) {
+    return res.status(403).send("User cannot be found.");
+  }
   // Set cookie:
   res.cookie("username", username);
   // console.log("req.cookies", req.cookies); // test
