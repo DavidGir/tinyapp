@@ -194,7 +194,7 @@ app.post("/urls/:id", (req, res) => {
   // If the short URL exists in the database and belongs to the logged in user:
   if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
     // Update the long URL associated with that short URL:
-    urlDatabase[shortURL] = req.body.newLongURL;
+    urlDatabase[shortURL].longURL = req.body.newLongURL;
     // After updating, redirect to urls page:
     res.redirect("/urls");
   } else {
