@@ -199,6 +199,12 @@ app.get("/register", (req, res) => {
   res.render("register", templateVars);
 });
 
+// Get route for the login page:
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+
 // Renders the urls_new.ejs template, which contains a form for creating new short URLs:
 app.get("/urls/new", (req, res) => {
   const userID = req.cookies["user_id"];
