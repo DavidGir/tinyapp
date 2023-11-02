@@ -69,6 +69,20 @@ const findUserByEmail = (email) => {
   return null;
 };
 
+// Helper function to filter the urlDatabase for URLs that belong to the user:
+const urlsForUser = (id) => {
+  // Initialize empty user URLs object:
+  const userURLs = {};
+  // Loop through urlDatabase object:
+  for (const urlId in urlDatabase) {
+    // If current user's ID exists in the urlDatabase:
+    if (urlDatabase[urlId].userID === id) {
+      userURLs[urlId] = urlDatabase[urlId];
+    }
+  }
+  // Return user URLs:
+  return userURLs;
+};
 
 // --------------------------------------------------------------------------
 
@@ -237,7 +251,6 @@ app.get("/urls", (req, res) => {
     </html>
     `);
   }
-
   const user = users[userID];
   // Initialize an empty object to store URLs that belong to the logged in user:
   const userURLs = {};
