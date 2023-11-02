@@ -101,13 +101,18 @@ app.post("/logout", (req, res) => {
 
 // Handles the registration form data:
 app.post("/register", (req, res) => {
+  // Get email and password from the request body:
+  const email = req.body.email;
+  const password = req.body.password;
   // Check if the email or password are empty strings:
   if (!email || !password) {
     return res.status(400).send("Email and password cannot be left blank.");
   }
-  // Get email and password from the request body:
-  const email = req.body.email;
-  const password = req.body.password;
+  // Check if email is already in use with help of findUserByEmail function:
+  const user = findUserByEmail(email);
+  if (user) {
+    return res.status(400).send("A user with that email already exists.");
+  }
   // Generate a random userID:
   const userID = generateRandomString();
   // Create new user object:
