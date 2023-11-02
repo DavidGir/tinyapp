@@ -77,7 +77,19 @@ app.post("/urls", (req, res) => {
   const user = users[userID];
   // If the user is not logged in; send a message, 401 unauthorized code:
   if (!user) {
-    return res.status(401).send("You must be logged in to be able to shorten URLs.");
+    return res.status(401).send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Not Authorized</title>
+    </head>
+    <body>
+      <p>You must be logged in to be able to shorten URLs.</p>
+    </body>
+    </html>
+  `);
   }
   // If the user is logged in; can proceed with creating new short URL:
   // To generate a random string for the shortURL:
@@ -285,7 +297,7 @@ app.get("/u/:id", (req, res) => {
     // Redirect to the longURL:
     res.redirect(longURL);
   } else {
-    // Handle the case where the shortURL does not exist:
+    // Handle the case where the shortURL does not exist; message in HTML:
     res.status(404).send(`
     <!DOCTYPE html>
     <html lang="en">
