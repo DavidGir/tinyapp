@@ -74,10 +74,10 @@ app.post("/login", (req, res) => {
   res.redirect("/urls");
 });
 
-// Clear the username cookie and redirect the user back to urls page:
+// Clear the user_id cookie and redirect the user back to urls page:
 app.post("/logout", (req, res) => {
-  // name is already specified when cookie was set:
-  res.clearCookie("username");
+  // Clear the user_id cookie:
+  res.clearCookie("user_id");
   res.redirect("/urls");
 });
 
@@ -151,8 +151,8 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
-// Renders the urls_index.ejs template, passing in the urlDatabase object as a variable.
-// This will display a list of all short URLs and their corresponding long URLs:
+// Renders the urls_index.ejs template.
+// This will display a list urls and userIDs:
 app.get("/urls", (req, res) => {
   const userID = req.cookies["user_id"];
   const user = users[userID];
