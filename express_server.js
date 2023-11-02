@@ -96,6 +96,7 @@ app.post("/login", (req, res) => {
   if (user.password !== password) {
     return res.status(403).send("Password does not match.");
   }
+  console.log('User found, setting cookie and redirecting:', user);
   // Set cookie:
   res.cookie("user_id", user.id);
   res.redirect("/urls");
