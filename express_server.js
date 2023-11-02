@@ -294,16 +294,22 @@ app.get("/urls/new", (req, res) => {
 // The corresponding long URL is looked up in the urlDatabase:
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
-  const longURL = urlDatabase[shortURL];
+  // Initialize variable that is now object with long URL and userID:
+  const urlObject = urlDatabase[shortURL];
   const userID = req.cookies["user_id"];
   const user = users[userID];
-  const templateVars = {
-    id: shortURL,
-    longURL: longURL,
-    user: user
-  };
-  console.log("templateVars:", templateVars);
-  res.render("urls_show", templateVars);
+  if (urlObject) {
+    const templateVars = {
+      id: shortURL,
+      longURL: urlObject.longURL,
+      user: user
+    };
+    // console.log("templateVars:", templateVars);
+    res.render("urls_show", templateVars);
+  } else {
+    // If the shortURL does not exist in the database, send a 404 response
+    res.status(404).send("Short URL not found");
+  }
 });
 //-----------------------------------------------------------------------------
 
