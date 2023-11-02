@@ -72,6 +72,12 @@ const findUserByEmail = (email) => {
 
 // Handles form submissions to create new short URLs:
 app.post("/urls", (req, res) => {
+  // Adding cookie user_id and user:
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
+  
+  
+  
   // To generate a random string for the shortURL:
   const shortURL = generateRandomString();
   // Getting the long URL from the form submission:
