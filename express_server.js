@@ -166,7 +166,9 @@ app.get("/urls", (req, res) => {
 
 // Get Route for the registration page:
 app.get("/register", (req, res) => {
-  const templateVars = { username: req.cookies["username"] };
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
+  const templateVars = { user: user };
   res.render("register", templateVars);
 });
 
