@@ -16,12 +16,12 @@ const urlDatabase = {
 };
 // In-memory data store used to store and access users in the app:
 const users = {
-  userRandomID: {
+  AAAAAA: {
     id: "aaaaaa",
     email: "a@a.com",
     password: "1234",
   },
-  user2RandomID: {
+  BBBBBB: {
     id: "bbbbbb",
     email: "b@b.com",
     password: "5678",
@@ -94,7 +94,12 @@ app.post("/register", (req, res) => {
     email: email,
     password: password
   };
+  // Testing if users object appends correctly:
   console.log(users);
+  // Set the user_id cookie:
+  res.cookie("user_id", userID);
+  // Redirect to url:
+  res.redirect("/urls");
 });
 
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
