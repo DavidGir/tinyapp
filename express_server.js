@@ -101,11 +101,15 @@ app.post("/logout", (req, res) => {
 
 // Handles the registration form data:
 app.post("/register", (req, res) => {
-  // Generate a random userID:
-  const userID = generateRandomString();
+  // Check if the email or password are empty strings:
+  if (!email || !password) {
+    return res.status(400).send("Email and password cannot be left blank.");
+  }
   // Get email and password from the request body:
   const email = req.body.email;
   const password = req.body.password;
+  // Generate a random userID:
+  const userID = generateRandomString();
   // Create new user object:
   users[userID] = {
     id: userID,
