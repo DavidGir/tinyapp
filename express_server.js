@@ -11,13 +11,13 @@ const PORT = 8080;
 app.set("view engine", "ejs");
 // In-memory database object:
 const urlDatabase = {
-  b6UTxQ: {
+  aaaaaa: {
     longURL: "https://www.tsn.ca",
-    userID: "aJ48lW",
+    userID: "aaaaaa",
   },
-  i3BoGr: {
+  bbbbbb: {
     longURL: "https://www.google.ca",
-    userID: "aJ48lW",
+    userID: "bbbbbb",
   },
 };
 // In-memory data store used to store and access users in the app:
@@ -242,6 +242,7 @@ app.get("/urls", (req, res) => {
     // Pass the user object:
     user: user
   };
+  console.log(userURLs);
   res.render("urls_index", templateVars);
 });
 
