@@ -31,7 +31,7 @@
           <% for (let id in urls) { %>
             <tr>
               <td><%= id %></td>
-              <td><%= urls[id] %></td>
+              <td><%= urls[id].longURL %></td>
               <td>
                 <!-- "Edit" column is added to the table. Each row in this column contains a link to the urls_show page for the corresponding URL -->
               <a href="/urls/<%= id %>" class="btn btn-secondary">Edit</a>
