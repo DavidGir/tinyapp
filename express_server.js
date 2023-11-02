@@ -226,6 +226,18 @@ app.get("/hello", (req, res) => {
 // This will display a list urls and userIDs:
 app.get("/urls", (req, res) => {
   const userID = req.cookies["user_id"];
+  // If user is not logged in:
+  if (!userID) {
+    // Return error message 401 (Unauthorized):
+    return res.status(401).send(`
+    <html>
+      <body>
+        <p>You must be <a href="/login">logged in</a> to view this page.</p>
+      </body>
+    </html>
+    `);
+  }
+
   const user = users[userID];
   // Initialize an empty object to store URLs that belong to the logged in user:
   const userURLs = {};
