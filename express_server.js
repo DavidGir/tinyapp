@@ -16,12 +16,12 @@ const urlDatabase = {
 };
 // In-memory data store used to store and access users in the app:
 const users = {
-  AAAAAA: {
+  aaaaaa: {
     id: "aaaaaa",
     email: "a@a.com",
     password: "1234",
   },
-  BBBBBB: {
+  bbbbbb: {
     id: "bbbbbb",
     email: "b@b.com",
     password: "5678",
@@ -87,6 +87,7 @@ app.post("/urls", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  console.log('Attempting to log in with email:', email);
   // Using the helper function to get user object:
   const user = findUserByEmail(email);
   // If no user is found, or the passwords don't match, we send 403:
