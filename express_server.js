@@ -211,7 +211,10 @@ app.get("/register", (req, res) => {
 
 // Get route for the login page:
 app.get("/login", (req, res) => {
-  res.render("login");
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
+  const templateVars = { user: user };
+  res.render("login", templateVars);
 });
 
 
