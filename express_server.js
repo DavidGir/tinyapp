@@ -17,12 +17,12 @@ const urlDatabase = {
 // In-memory data store used to store and access users in the app:
 const users = {
   userRandomID: {
-    id: "userRandomID",
+    id: "aaaaaa",
     email: "a@a.com",
     password: "1234",
   },
   user2RandomID: {
-    id: "user2RandomID",
+    id: "bbbbbb",
     email: "b@b.com",
     password: "5678",
   },
@@ -79,6 +79,22 @@ app.post("/logout", (req, res) => {
   // name is already specified when cookie was set:
   res.clearCookie("username");
   res.redirect("/urls");
+});
+
+// Handles the registration form data:
+app.post("/register", (req, res) => {
+  // Generate a random userID:
+  const userID = generateRandomString();
+  // Get email and password from the request body:
+  const email = req.body.email;
+  const password = req.body.password;
+  // Create new user object:
+  users[userID] = {
+    id: userID,
+    email: email,
+    password: password
+  };
+  console.log(users);
 });
 
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
