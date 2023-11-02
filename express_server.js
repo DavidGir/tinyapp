@@ -98,7 +98,6 @@ app.post("/login", (req, res) => {
   }
   // Set cookie:
   res.cookie("username", username);
-  // console.log("req.cookies", req.cookies); // test
   res.redirect("/urls");
 });
 
