@@ -184,10 +184,12 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
   const longURL = urlDatabase[shortURL];
+  const userID = req.cookies["user_id"];
+  const user = users[userID];
   const templateVars = {
     id: shortURL,
     longURL: longURL,
-    username: req.cookies["username"]
+    user: user
   };
   console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
