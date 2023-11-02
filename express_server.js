@@ -11,8 +11,14 @@ const PORT = 8080;
 app.set("view engine", "ejs");
 // In-memory database object:
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  b6UTxQ: {
+    longURL: "https://www.tsn.ca",
+    userID: "aJ48lW",
+  },
+  i3BoGr: {
+    longURL: "https://www.google.ca",
+    userID: "aJ48lW",
+  },
 };
 // In-memory data store used to store and access users in the app:
 const users = {
