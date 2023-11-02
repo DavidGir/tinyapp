@@ -191,13 +191,12 @@ app.post("/urls/:id", (req, res) => {
   if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
     // Update the long URL associated with that short URL:
     urlDatabase[shortURL] = req.body.newLongURL;
-    // Update the long URL associated with the given short URL id:
+    // After updating, redirect to urls page:
+    res.redirect("/urls");
   } else {
     // If the short URL does not exist or not belong to user send message:
     return res.status(404).send("URL not found");
   }
-  // Redirect to urls page:
-  res.redirect("/urls");
 });
 
 // ----------------------------------------------------------------------------
