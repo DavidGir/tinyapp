@@ -19,8 +19,8 @@
       </div>
       <div class="ml-auto">
         <!-- Username info is displayed conditionally based on whether the user is logged in the logout button will be available else it will be on login. -->
-        <% if (username) { %>
-          Logged in as: <%= username %>
+        <% if (user) { %>
+          Logged in as: <%= user.email %>
           <form method="POST" action="/logout" style="display: inline;">
             <button type="submit" class="btn btn-success">Logout</button>
           </form>
