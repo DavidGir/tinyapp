@@ -194,16 +194,14 @@ app.post("/urls/:id/delete", (req, res) => {
   const userID = req.cookies["user_id"];
   // Extract the :id (shortURL ID) parameter from the URL:
   const shortURL = req.params.id;
-  // If the short URL exists in the database and belongs to the logged in user:
-  if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
-    // Use delete operator to delete URL from the database:
-    delete urlDatabase[shortURL];
-    // Redirect to urls page:
-    res.redirect("/urls");
-  } else {
-    // Else return 404:
-    return res.status(404).send("URL not found");
+  // Check if user is not logged in and the URL does not belongs to the user (with helper function):
+  if (!userID || !urlBelongsToUser(shortURL, userID)) {
+    return res.status(403).send("You do not have permission to delete this URL");
   }
+  // Use delete operator to delete URL from the database:
+  delete urlDatabase[shortURL];
+  // Redirect to urls page:
+  res.redirect("/urls");
 });
 
 // Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
@@ -339,6 +337,7 @@ app.get("/urls/:id", (req, res) => {
     // console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
 });
+
 //-----------------------------------------------------------------------------
 
 // GET method route for URL redirection:
