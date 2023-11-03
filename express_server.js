@@ -138,7 +138,13 @@ app.post("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-// Handles the registration form data:
+/**
+ * POST /register
+ * Purpose: Register a new user.
+ * Input: 'email' and 'password' from the request body.
+ * Output: Redirects to the URL listing page on successful registration.
+ * Authentication: None, this route is for users who are not yet authenticated.
+ */
 app.post("/register", (req, res) => {
   // Get email and password from the request body:
   const email = req.body.email;
