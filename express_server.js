@@ -59,12 +59,15 @@ app.use(cookieSession({
 app.use(morgan("dev"));
 
 // --------------------------------------------------------------------------
-
-// ROUTE METHODS:
-
 // POST methods routes:
 
-// Handles form submissions to create new short URLs:
+/**
+ * POST /urls
+ * Purpose: Create a new short URL and associate it with the user.
+ * Input: 'longURL' from the request body.
+ * Output: Redirects to the URL info page for the newly created short URL.
+ * Authentication: User must be logged in.
+ */
 app.post("/urls", (req, res) => {
   // Adding cookie user_id and user:
   const userID = req.session.user_id;
@@ -96,7 +99,13 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-// POST /login route: Authenticates the user and sets a session cookie.
+/**
+ * POST /login
+ * Purpose: Authenticate a user and start a session.
+ * Input: 'email' and 'password' from the request body.
+ * Output: Redirects to the URL listing page on successful login.
+ * Authentication: None, this route performs authentication.
+ */
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -115,7 +124,13 @@ app.post("/login", (req, res) => {
   res.redirect("/urls");
 });
 
-// Clear the user_id cookie and redirect the user back to urls page:
+/**
+ * POST /logout
+ * Purpose: Log out the user by clearing the session.
+ * Input: None.
+ * Output: Redirects to the login page.
+ * Authentication: None, accessible to anyone.
+ */
 app.post("/logout", (req, res) => {
   // Clear the session user_id:
   req.session = null;
