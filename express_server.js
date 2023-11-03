@@ -45,7 +45,6 @@ for (const userID in users) {
   // Replace plain text password with hashed one:
   users[userID].password = hashedPassword;
 }
-// console.log(users);
 
 // MIDDLEWARE:
 
@@ -93,7 +92,6 @@ app.post("/urls", (req, res) => {
   const longURL = req.body.longURL;
   // Store a new object with longURL and userID:
   urlDatabase[shortURL] = { longURL, userID };
-  // console.log(req.body);
   // Redirect to the new URL's info page:
   res.redirect(`/urls/${shortURL}`);
 });
@@ -102,7 +100,6 @@ app.post("/urls", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log('Attempting to log in with email:', email);
   // Using the helper function by passing users database:
   const user = findUserByEmail(email, users);
   // If no user is found, or the passwords don't match, we send 403:
@@ -113,7 +110,6 @@ app.post("/login", (req, res) => {
   if (!bcrypt.compareSync(password, user.password)) {
     return res.status(403).send("Password does not match.");
   }
-  console.log("User found:", user);
   // Set cookie:
   req.session.user_id = user.id;
   res.redirect("/urls");
@@ -151,8 +147,6 @@ app.post("/register", (req, res) => {
     email: email,
     password: hashedPassword
   };
-  // Testing if users object appends correctly:
-  console.log(users);
   // Set the user_id cookie:
   req.session.user_id = userID;
   // Redirect to url:
@@ -235,7 +229,6 @@ app.get("/urls", (req, res) => {
     urls: userURLs,
     user: user
   };
-  // console.log(userURLs);
   res.render("urls_index", templateVars);
 });
 
@@ -313,7 +306,6 @@ app.get("/urls/:id", (req, res) => {
     longURL: urlObject.longURL,
     user: user
   };
-    // console.log("templateVars:", templateVars);
   res.render("urls_show", templateVars);
 });
 
