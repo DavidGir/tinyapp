@@ -183,13 +183,15 @@ app.post("/register", (req, res) => {
   if (user) {
     return res.status(400).send("A user with that email already exists.");
   }
+  // Hash password:
+  const hashedPassword = bcrypt.hashSync(password, 10);
   // Generate a random userID:
   const userID = generateRandomString();
   // Create new user object:
   users[userID] = {
     id: userID,
     email: email,
-    password: password
+    password: hashedPassword
   };
   // Testing if users object appends correctly:
   console.log(users);
