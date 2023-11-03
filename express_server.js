@@ -1,8 +1,8 @@
 // Import Express library and initialize an application instance:
 const express = require("express");
 const app = express();
-// Import cookieParser middleware:
-const cookieParser = require("cookie-parser");
+// Import cookieSession middleware:
+const cookieSession = require("cookie-session");
 // Import morgan middleware:
 const morgan = require("morgan");
 // Import bcrypt:
