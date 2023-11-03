@@ -87,6 +87,7 @@ const urlsForUser = (id) => {
 // Helper function to check if a given URL belongs to a user:
 const urlBelongsToUser = (shortURL, userID) => {
   const urlObject = urlDatabase[shortURL];
+  // Returns true if URL belongs to the user and false otherwise:
   return urlObject && urlObject.userID === userID;
 };
 
@@ -311,19 +312,21 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
-// Renders the urls_show.ejs template for a specific short URL.
-// The short URL is obtained from the route parameter :id.
-// The corresponding long URL is looked up in the urlDatabase:
+// Get route to display the dit page for a specific URL:
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
-  // Initialize variable that is now object with long URL and userID:
   const urlObject = urlDatabase[shortURL];
   const userID = req.cookies["user_id"];
+  const user = users[userID];
   // If user not logged in:
   if (!userID) {
-    return res.status(401).send("You must be logged in to view this page.");
+    return res.status(401).send("You must be logged in to view this page");
   }
-  const user = users[userID];
+  // Use of helper function to check if the URL belongs to the logged in user:
+  if (!urlBelongsToUser(shortURL, userID)) {
+    return res.status(403).send("You do not have permission to view this page");
+  }
+  // If URL belongs to the user, proceed with the rest of the code:
   if (urlObject) {
     const templateVars = {
       id: shortURL,
