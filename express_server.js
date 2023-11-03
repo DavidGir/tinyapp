@@ -210,16 +210,18 @@ app.post("/urls/:id", (req, res) => {
   const userID = req.cookies["user_id"];
   // Extract the :id (shortURL ID) parameter from the URL:
   const shortURL = req.params.id;
-  // If the short URL exists in the database and belongs to the logged in user:
-  if (urlDatabase[shortURL] && urlDatabase[shortURL].userID === userID) {
-    // Update the long URL associated with that short URL:
-    urlDatabase[shortURL].longURL = req.body.newLongURL;
-    // After updating, redirect to urls page:
-    res.redirect("/urls");
-  } else {
-    // If the short URL does not exist or not belong to user send message:
-    return res.status(404).send("URL not found");
+  // If short URL does not exist return 404 message:
+  if (!urlDatabase[shortURL]) {
+    return res.status(404).send("The requested URL was not found on this server");
   }
+  // Check if the user is logged in and if the URL belongs to the user (helper function):
+  if (!userID || !urlBelongsToUser(shortURL, userID)) {
+    return res.status(403).send("You do not have permission to edit this URL.");
+  }
+  // Update the long URL associated with that short URL:
+  urlDatabase[shortURL].longURL = req.body.newLongURL;
+  // After updating, redirect to urls page:
+  res.redirect("/urls");
 });
 
 // ----------------------------------------------------------------------------
