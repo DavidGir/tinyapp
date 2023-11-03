@@ -152,10 +152,11 @@ app.post("/login", (req, res) => {
   if (!user) {
     return res.status(403).send("User cannot be found.");
   }
-  if (user.password !== password) {
+  // Using bcrypt to compare the provided password with the hashed password and match previous logic:
+  if (!bcrypt.compareSync(password, user.password)) {
     return res.status(403).send("Password does not match.");
   }
-  console.log('User found, setting cookie and redirecting:', user);
+  console.log("User found:", user);
   // Set cookie:
   res.cookie("user_id", user.id);
   res.redirect("/urls");
