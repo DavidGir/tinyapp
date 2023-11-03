@@ -251,23 +251,13 @@ app.get("/urls", (req, res) => {
     </html>
     `);
   }
-  const user = users[userID];
-  // Initialize an empty object to store URLs that belong to the logged in user:
-  const userURLs = {};
-  // Loop through each key (shortURL ID) in the urlDatabase:
-  for (const id in urlDatabase) {
-    // CHeck if userID associated with current URL matches logged in user's ID:
-    if (urlDatabase[id].userID === userID) {
-      // If match add URLs to the userURLs object:
-      userURLs[id] = urlDatabase[id];
-    }
-  }
+  // Initialize variable to contain helper function call:
+  const userURLs = urlsForUser(userID);
   const templateVars = {
     urls: userURLs,
-    // Pass the user object:
-    user: user
+    user: users[userID]
   };
-  console.log(userURLs);
+  // console.log(userURLs);
   res.render("urls_index", templateVars);
 });
 
