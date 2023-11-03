@@ -236,8 +236,7 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
-// Renders the urls_index.ejs template.
-// This will display a list urls and userIDs:
+// Renders the urls_index.ejs template to display the URLs belonging to the logged-in user:
 app.get("/urls", (req, res) => {
   const userID = req.cookies["user_id"];
   // If user is not logged in:
@@ -251,11 +250,12 @@ app.get("/urls", (req, res) => {
     </html>
     `);
   }
-  // Initialize variable to contain helper function call:
+  // Initialize variable to retrieve URLs specific to the logged in user using the urlsForUser helper function:
   const userURLs = urlsForUser(userID);
+  const user = users[userID];
   const templateVars = {
     urls: userURLs,
-    user: users[userID]
+    user: user
   };
   // console.log(userURLs);
   res.render("urls_index", templateVars);
@@ -313,6 +313,10 @@ app.get("/urls/:id", (req, res) => {
   // Initialize variable that is now object with long URL and userID:
   const urlObject = urlDatabase[shortURL];
   const userID = req.cookies["user_id"];
+  // If user not logged in:
+  if (!userID) {
+    return res.status(401).send("You must be logged in to view this page.");
+  }
   const user = users[userID];
   if (urlObject) {
     const templateVars = {
