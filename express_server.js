@@ -84,6 +84,12 @@ const urlsForUser = (id) => {
   return userURLs;
 };
 
+// Helper function to check if a given URL belongs to a user:
+const urlBelongsToUser = (shortURL, userID) => {
+  const urlObject = urlDatabase[shortURL];
+  return urlObject && urlObject.userID === userID;
+};
+
 // --------------------------------------------------------------------------
 
 // ROUTE METHODS:
