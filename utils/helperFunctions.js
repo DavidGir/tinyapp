@@ -27,7 +27,11 @@ const urlsForUser = (id, database) => {
   return userURLs;
 };
 
-
+// Checks if a URL belongs to a user:
+const urlBelongsToUser = (shortURL, userID, database) => {
+  const urlObject = database[shortURL];
+  return urlObject && urlObject.userID === userID;
+};
 
 module.exports = {
   generateRandomString,
