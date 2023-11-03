@@ -7,6 +7,8 @@ const cookieSession = require("cookie-session");
 const morgan = require("morgan");
 // Import bcrypt:
 const bcrypt = require("bcryptjs");
+// Import helper functions:
+const { generateRandomString, findUserByEmail, urlsForUser, urlBelongsToUser } = require('./utils/helperFunctions');
 // Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
@@ -49,7 +51,7 @@ for (const userID in users) {
 
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
-// Use of cookieParser in the app to parse incoming cookies off the req object:
+// Use of cookieSession in the app to parse incoming cookies off the req object:
 app.use(cookieSession({
   name: "session",
   keys: ["asdfghjkl"],
@@ -61,49 +63,49 @@ app.use(morgan("dev"));
 // UTILITY FUNCTIONS:
 
 //generateRandomString function; generates random string to be used as a short URL identifier:
-const generateRandomString = function() {
-  // Initialize variable to generate random six alphanumeric characters:
-  const randomString = Math.random().toString(36).substring(2, 8);
-  // Return result:
-  return randomString;
-};
+// const generateRandomString = function() {
+//   // Initialize variable to generate random six alphanumeric characters:
+//   const randomString = Math.random().toString(36).substring(2, 8);
+//   // Return result:
+//   return randomString;
+// };
 
-// Helper function to handle registration errors:
-const findUserByEmail = (email) => {
-  // Loop through users object:
-  for (let userID in users) {
-    const user = users[userID];
-    // If user email is in our users data store (exists):
-    if (user.email === email) {
-      // Return user object for match found:
-      return user;
-    }
-  }
-  // Return null if no match exists:
-  return null;
-};
+// // Helper function to handle registration errors:
+// const findUserByEmail = (email, users) => {
+//   // Loop through users object:
+//   for (const userID in users) {
+//     const user = users[userID];
+//     // If user email is in our users data store (exists):
+//     if (user.email === email) {
+//       // Return user object for match found:
+//       return user;
+//     }
+//   }
+//   // Return null if no match exists:
+//   return null;
+// };
 
-// Helper function to filter the urlDatabase for URLs that belong to the user:
-const urlsForUser = (id) => {
-  // Initialize empty user URLs object:
-  const userURLs = {};
-  // Loop through urlDatabase object:
-  for (const urlId in urlDatabase) {
-    // If current user's ID exists in the urlDatabase:
-    if (urlDatabase[urlId].userID === id) {
-      userURLs[urlId] = urlDatabase[urlId];
-    }
-  }
-  // Return user URLs:
-  return userURLs;
-};
+// // Helper function to filter the urlDatabase for URLs that belong to the user:
+// const urlsForUser = (id) => {
+//   // Initialize empty user URLs object:
+//   const userURLs = {};
+//   // Loop through urlDatabase object:
+//   for (const urlId in urlDatabase) {
+//     // If current user's ID exists in the urlDatabase:
+//     if (urlDatabase[urlId].userID === id) {
+//       userURLs[urlId] = urlDatabase[urlId];
+//     }
+//   }
+//   // Return user URLs:
+//   return userURLs;
+// };
 
-// Helper function to check if a given URL belongs to a user:
-const urlBelongsToUser = (shortURL, userID) => {
-  const urlObject = urlDatabase[shortURL];
-  // Returns true if URL belongs to the user and false otherwise:
-  return urlObject && urlObject.userID === userID;
-};
+// // Helper function to check if a given URL belongs to a user:
+// const urlBelongsToUser = (shortURL, userID) => {
+//   const urlObject = urlDatabase[shortURL];
+//   // Returns true if URL belongs to the user and false otherwise:
+//   return urlObject && urlObject.userID === userID;
+// };
 
 // --------------------------------------------------------------------------
 
@@ -149,8 +151,8 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   console.log('Attempting to log in with email:', email);
-  // Using the helper function to get user object:
-  const user = findUserByEmail(email);
+  // Using the helper function by passing users database:
+  const user = findUserByEmail(email, users);
   // If no user is found, or the passwords don't match, we send 403:
   if (!user) {
     return res.status(403).send("User cannot be found.");
@@ -208,11 +210,11 @@ app.post("/register", (req, res) => {
 // Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
 app.post("/urls/:id/delete", (req, res) => {
   // Initialize variable to contain user_id cookie to identify logged in user:
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   // Extract the :id (shortURL ID) parameter from the URL:
   const shortURL = req.params.id;
   // Check if user is not logged in and the URL does not belongs to the user (with helper function):
-  if (!userID || !urlBelongsToUser(shortURL, userID)) {
+  if (!userID || !urlBelongsToUser(shortURL, userID, urlDatabase)) {
     return res.status(403).send("You do not have permission to delete this URL");
   }
   // Use delete operator to delete URL from the database:
@@ -224,7 +226,7 @@ app.post("/urls/:id/delete", (req, res) => {
 // Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
 app.post("/urls/:id", (req, res) => {
   // Initialize variable to contain user_id cookie to identify logged in user:
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   // Extract the :id (shortURL ID) parameter from the URL:
   const shortURL = req.params.id;
   // If short URL does not exist return 404 message:
@@ -232,7 +234,7 @@ app.post("/urls/:id", (req, res) => {
     return res.status(404).send("The requested URL was not found on this server");
   }
   // Check if the user is logged in and if the URL belongs to the user (helper function):
-  if (!userID || !urlBelongsToUser(shortURL, userID)) {
+  if (!userID || !urlBelongsToUser(shortURL, userID, urlDatabase)) {
     return res.status(403).send("You do not have permission to edit this URL.");
   }
   // Update the long URL associated with that short URL:
@@ -275,7 +277,7 @@ app.get("/urls", (req, res) => {
     `);
   }
   // Initialize variable to retrieve URLs specific to the logged in user using the urlsForUser helper function:
-  const userURLs = urlsForUser(userID);
+  const userURLs = urlsForUser(userID, urlDatabase);
   const user = users[userID];
   const templateVars = {
     urls: userURLs,
@@ -350,7 +352,7 @@ app.get("/urls/:id", (req, res) => {
     `);
   }
   // Use of helper function to check if the URL belongs to the logged in user:
-  if (!urlBelongsToUser(shortURL, userID)) {
+  if (!urlBelongsToUser(shortURL, userID, urlDatabase)) {
     return res.status(403).send("You do not have permission to view this page");
   }
   // If URL exists and belongs to the user, proceed with rendering:
