@@ -223,11 +223,15 @@ app.post("/urls/:id", (req, res) => {
 });
 
 // ----------------------------------------------------------------------------
-
 // GET method routes for URL manipulation:
 
-
-// Renders the urls_index.ejs template to display the URLs belonging to the logged-in user:
+/**
+ * GET /urls
+ * Purpose: Display the URL listing page for the logged-in user.
+ * Input: None.
+ * Output: Renders the URL listing page with URLs belonging to the logged-in user.
+ * Authentication: User must be logged in.
+ */
 app.get("/urls", (req, res) => {
   const userID = req.session.user_id;
   // If user is not logged in:
@@ -251,7 +255,13 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
-// Get Route for the registration page:
+/**
+ * GET /register
+ * Purpose: Display the user registration page.
+ * Input: None.
+ * Output: Renders the registration page.
+ * Authentication: None, accessible to anyone not logged in.
+ */
 app.get("/register", (req, res) => {
   const userID = req.session.user_id;
   // Check if user_id cookie corresponds with valid user in users obj (meaning user is in login state):
@@ -266,7 +276,13 @@ app.get("/register", (req, res) => {
   }
 });
 
-// Get route for the login page:
+/**
+ * GET /login
+ * Purpose: Display the user login page.
+ * Input: None.
+ * Output: Renders the login page.
+ * Authentication: None, accessible to anyone not logged in.
+ */
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
   // Check if user_id cookie corresponds with valid user in users obj (meaning user is in login state):
@@ -281,8 +297,13 @@ app.get("/login", (req, res) => {
   }
 });
 
-
-// Renders the urls_new.ejs template, which contains a form for creating new short URLs:
+/**
+ * GET /urls/new
+ * Purpose: Display the page to create a new short URL.
+ * Input: None.
+ * Output: Renders the page for creating a new short URL.
+ * Authentication: User must be logged in.
+ */
 app.get("/urls/new", (req, res) => {
   const userID = req.session.user_id;
   const user = users[userID];
@@ -295,7 +316,13 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
-// Get route to display the dit page for a specific URL:
+/**
+ * GET /urls/:id
+ * Purpose: Display the edit page for a specific short URL.
+ * Input: ':id' from the URL parameter.
+ * Output: Renders the edit page for the specified short URL.
+ * Authentication: User must be logged in and own the URL.
+ */
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
   const urlObject = urlDatabase[shortURL];
@@ -328,10 +355,13 @@ app.get("/urls/:id", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-//-----------------------------------------------------------------------------
-
-// GET method route for URL redirection:
-
+/**
+ * GET /u/:id
+ * Purpose: Redirect to the original URL corresponding to the short URL.
+ * Input: ':id' from the URL parameter.
+ * Output: Redirects to the original long URL.
+ * Authentication: None, accessible to anyone.
+ */
 app.get("/u/:id", (req, res) => {
   // Contain in variable the shortURL from the route parameter:
   const shortURL = req.params.id;
@@ -369,7 +399,6 @@ app.get("/u/:id", (req, res) => {
 
 // EVENT HANDLERS:
 
-// Start the Express server to listen on specific port:
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
