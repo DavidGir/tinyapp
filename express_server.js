@@ -50,7 +50,10 @@ for (const userID in users) {
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
 // Use of cookieParser in the app to parse incoming cookies off the req object:
-app.use(cookieSession());
+app.use(cookieSession({
+  name: "session",
+  keys: ["asdfghjkl"],
+}));
 // Use the logger middleware:
 app.use(morgan("dev"));
 
@@ -111,7 +114,7 @@ const urlBelongsToUser = (shortURL, userID) => {
 // Handles form submissions to create new short URLs:
 app.post("/urls", (req, res) => {
   // Adding cookie user_id and user:
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   const user = users[userID];
   // If the user is not logged in; send a message, 401 unauthorized code:
   if (!user) {
