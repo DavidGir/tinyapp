@@ -226,20 +226,6 @@ app.post("/urls/:id", (req, res) => {
 
 // GET method routes for URL manipulation:
 
-// When a client navigates to http://localhost:8080/, they'll receive the text "Hello!":
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
-
-// Outputs the urlDatabase object as JSON when a client navigates to http://localhost:8080/urls.json:
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
-});
-
-// Sends a simple HTML response when a client navigates to http://localhost:8080/hello:
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
 
 // Renders the urls_index.ejs template to display the URLs belonging to the logged-in user:
 app.get("/urls", (req, res) => {
