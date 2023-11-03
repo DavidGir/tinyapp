@@ -200,7 +200,7 @@ app.post("/register", (req, res) => {
   // Testing if users object appends correctly:
   console.log(users);
   // Set the user_id cookie:
-  res.cookie("user_id", userID);
+  req.session.user_id = userID;
   // Redirect to url:
   res.redirect("/urls");
 });
@@ -262,7 +262,7 @@ app.get("/hello", (req, res) => {
 
 // Renders the urls_index.ejs template to display the URLs belonging to the logged-in user:
 app.get("/urls", (req, res) => {
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   // If user is not logged in:
   if (!userID) {
     // Return error message 401 (Unauthorized):
@@ -287,7 +287,7 @@ app.get("/urls", (req, res) => {
 
 // Get Route for the registration page:
 app.get("/register", (req, res) => {
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   // Check if user_id cookie corresponds with valid user in users obj (meaning user is in login state):
   if (userID && users[userID]) {
     // Redirect to /urls:
@@ -302,7 +302,7 @@ app.get("/register", (req, res) => {
 
 // Get route for the login page:
 app.get("/login", (req, res) => {
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   // Check if user_id cookie corresponds with valid user in users obj (meaning user is in login state):
   if (userID && users[userID]) {
     // Redirect to /urls:
@@ -318,7 +318,7 @@ app.get("/login", (req, res) => {
 
 // Renders the urls_new.ejs template, which contains a form for creating new short URLs:
 app.get("/urls/new", (req, res) => {
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   const user = users[userID];
   // If user is not logged in; redirect to login page:
   if (!user) {
@@ -333,7 +333,7 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   const shortURL = req.params.id;
   const urlObject = urlDatabase[shortURL];
-  const userID = req.cookies["user_id"];
+  const userID = req.session.user_id;
   const user = users[userID];
   // If the shortURL does not exist in the database:
   if (!urlObject) {
