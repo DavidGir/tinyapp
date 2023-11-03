@@ -26,8 +26,6 @@ describe("findUserByEmail", function() {
   it("should return null for an email not in the database", function() {
     const user = findUserByEmail("nonexistent@example.com", testUsers);
     // Adding a message to describe what assertion is checking:
-    assert.strictEqual(user, null, "The function should return null for an email not in the database.");
+    assert.isNull(user, "The function should return null for an email not in the database.");
   });
-  
-  
 });
