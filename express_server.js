@@ -161,7 +161,7 @@ app.post("/login", (req, res) => {
   }
   console.log("User found:", user);
   // Set cookie:
-  res.cookie("user_id", user.id);
+  req.session.user_id = user.id;
   res.redirect("/urls");
 });
 
