@@ -50,7 +50,7 @@ for (const userID in users) {
 //Parses incoming requests with URL-encoded request body from a Buffer into a string that is readable before any route handlers try to access it:
 app.use(express.urlencoded({ extended: true }));
 // Use of cookieParser in the app to parse incoming cookies off the req object:
-app.use(cookieParser());
+app.use(cookieSession());
 // Use the logger middleware:
 app.use(morgan("dev"));
 
