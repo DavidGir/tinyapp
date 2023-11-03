@@ -174,7 +174,13 @@ app.post("/register", (req, res) => {
   res.redirect("/urls");
 });
 
-// Deletes a URL from urlDatabase object based on the :id param and redirects back to URL list:
+/**
+ * POST /urls/:id/delete
+ * Purpose: Delete a short URL.
+ * Input: ':id' from the URL parameter.
+ * Output: Redirects to the URL listing page after deletion.
+ * Authentication: User must be logged in and own the URL.
+ */
 app.post("/urls/:id/delete", (req, res) => {
   // Initialize variable to contain user_id cookie to identify logged in user:
   const userID = req.session.user_id;
@@ -190,7 +196,13 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 });
 
-// Updates an existing URL in urlDatabase based on :id param and redirects back to URL list page:
+/**
+ * POST /urls/:id
+ * Purpose: Update an existing short URL.
+ * Input: ':id' from the URL parameter and 'newLongURL' from the request body.
+ * Output: Redirects to the URL listing page after updating.
+ * Authentication: User must be logged in and own the URL.
+ */
 app.post("/urls/:id", (req, res) => {
   // Initialize variable to contain user_id cookie to identify logged in user:
   const userID = req.session.user_id;
