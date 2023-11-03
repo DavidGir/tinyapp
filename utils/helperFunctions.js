@@ -16,6 +16,17 @@ const findUserByEmail = (email, database) => {
   return null;
 };
 
+// Filters URLs for a specific user:
+const urlsForUser = (id, database) => {
+  const userURLs = {};
+  for (const urlId in database) {
+    if (database[urlId].userID === id) {
+      userURLs[urlId] = database[urlId];
+    }
+  }
+  return userURLs;
+};
+
 
 
 module.exports = {
