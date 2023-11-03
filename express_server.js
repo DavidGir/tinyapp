@@ -8,7 +8,7 @@ const morgan = require("morgan");
 // Import bcrypt:
 const bcrypt = require("bcryptjs");
 // Import helper functions:
-const { generateRandomString, findUserByEmail, urlsForUser, urlBelongsToUser } = require('./utils/helpers');
+const { generateRandomString, findUserByEmail, urlsForUser, urlBelongsToUser } = require("./utils/helpers");
 // Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
