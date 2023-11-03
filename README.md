@@ -5,6 +5,14 @@ TinyApp is a full-stack web application built with Node.js and Express that allo
 ## Purpose
 This project was published for learning purposes as part of my learnings at Lighthouse Labs (LHL).
 
+## Final Product
+
+!["Screenshot of URLs page"](https://github.com/DavidGir/tinyapp/blob/master/docs/urls-page.png)
+!["Screenshot of login page"](https://github.com/DavidGir/tinyapp/blob/master/docs/login-page.png)
+!["Screenshot of URLs new page"](https://github.com/DavidGir/tinyapp/blob/master/docs/urls-new-page.png)
+!["Screenshot of edit page"](https://github.com/DavidGir/tinyapp/blob/master/docs/edit-page.png)
+
+
 ## Features
 
 - Shorten URLs
