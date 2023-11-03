@@ -5,6 +5,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 // Import morgan middleware:
 const morgan = require("morgan");
+// Import bcrypt:
+const bcrypt = require("bcryptjs");
 // Config:
 const PORT = 8080;
 // Tells Express app to use EJS as its templating engine:
@@ -25,14 +27,23 @@ const users = {
   aaaaaa: {
     id: "aaaaaa",
     email: "a@a.com",
-    password: "1234",
+    password: "$2a$10$TjHOq2r4GIjKTvTL5NPfuun/yzFwt5UkTzd5L5lrnHU2BEXHM6/ja",
   },
   bbbbbb: {
     id: "bbbbbb",
     email: "b@b.com",
-    password: "5678",
+    password: "$2a$10$gzYAJBlhcAAqcMDJbE6sCu.D1To4nIuA.HJJOQYI4dnwDjE.bM8fu",
   },
 };
+// Hash existing user passwords by iterating over users object:
+for (const userID in users) {
+  const plainTextPassword = users[userID].password;
+  // Hash the plain text password:
+  const hashedPassword = bcrypt.hashSync(plainTextPassword, 10);
+  // Replace plain text password with hashed one:
+  users[userID].password = hashedPassword;
+}
+// console.log(users);
 
 // MIDDLEWARE:
 
