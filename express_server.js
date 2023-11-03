@@ -373,30 +373,11 @@ app.get("/u/:id", (req, res) => {
     res.redirect(longURL);
   } else {
     // Handle the case where the shortURL does not exist; message in HTML:
-    res.status(404).send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>404 Not Found</title>
-      <style>
-        body { text-align: center; padding: 50px; font-family: 'Arial', sans-serif; }
-        h1 { color: #333; }
-        p { color: #666; }
-      </style>
-    </head>
-    <body>
-      <h1>404 - Not Found</h1>
-      <p>The short URL you are trying to access does not exist.</p>
-    </body>
-    </html>
-  `);
+    res.status(404).send("The short URL you are trying to access does not exist.");
   }
 });
 
 //-----------------------------------------------------------------------------
-
 // EVENT HANDLERS:
 
 app.listen(PORT, () => {
