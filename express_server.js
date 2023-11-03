@@ -133,7 +133,7 @@ app.post("/register", (req, res) => {
     return res.status(400).send("Email and password cannot be left blank.");
   }
   // Check if email is already in use with help of findUserByEmail function:
-  const user = findUserByEmail(email);
+  const user = findUserByEmail(email, users);
   if (user) {
     return res.status(400).send("A user with that email already exists.");
   }
