@@ -318,6 +318,10 @@ app.get("/urls/:id", (req, res) => {
   const urlObject = urlDatabase[shortURL];
   const userID = req.cookies["user_id"];
   const user = users[userID];
+  // If the shortURL does not exist in the database:
+  if (!urlObject) {
+    return res.status(404).send("The requested URL was not found on this server.");
+  }
   // If user not logged in:
   if (!userID) {
     return res.status(401).send("You must be logged in to view this page");
@@ -326,19 +330,14 @@ app.get("/urls/:id", (req, res) => {
   if (!urlBelongsToUser(shortURL, userID)) {
     return res.status(403).send("You do not have permission to view this page");
   }
-  // If URL belongs to the user, proceed with the rest of the code:
-  if (urlObject) {
-    const templateVars = {
-      id: shortURL,
-      longURL: urlObject.longURL,
-      user: user
-    };
+  // If URL exists and belongs to the user, proceed with rendering:
+  const templateVars = {
+    id: shortURL,
+    longURL: urlObject.longURL,
+    user: user
+  };
     // console.log("templateVars:", templateVars);
-    res.render("urls_show", templateVars);
-  } else {
-    // If the shortURL does not exist in the database, send a 404 response
-    res.status(404).send("Short URL not found");
-  }
+  res.render("urls_show", templateVars);
 });
 //-----------------------------------------------------------------------------
 
