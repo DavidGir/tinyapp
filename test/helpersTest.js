@@ -22,7 +22,7 @@ describe("findUserByEmail", function() {
     // Adding a message to describe what assertion is checking:
     assert.strictEqual(user.id, expectedUserID, "The returned ID should match the expected user ID.");
   });
-
+  // The exercise that asked us to create the findUserByEmail function directed to return null; in this light i will test for null:
   it("should return null for an email not in the database", function() {
     const user = findUserByEmail("nonexistent@example.com", testUsers);
     // Adding a message to describe what assertion is checking:
